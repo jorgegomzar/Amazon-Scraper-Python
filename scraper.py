@@ -2,10 +2,14 @@ import requests
 from bs4 import BeautifulSoup
 import smtplib
 import json
-
+import os
 
 
 def check_price(product):
+    """ Checks the current price of a product.
+    If the price is below the MAX_PRICE chose by the user
+    sends him an email. """
+
     URL = product['url']
     MAX_PRICE = product['max_price']
     headers = {
@@ -20,6 +24,7 @@ def check_price(product):
     title = soup.find(id="productTitle").get_text()
     price = soup.find(id="priceblock_ourprice").get_text()
 
+    # This parses the price until there is no ',' in it.
     last_char = 5
     while True:
         parsed_price = price[0:last_char]
@@ -30,15 +35,16 @@ def check_price(product):
 
     actual_price = float(parsed_price)
 
-    print('·', title.strip(), '-', actual_price, '€')
+    print('·', title.strip(), '-', actual_price, translations['currency'])
 
     if(actual_price < MAX_PRICE):
         send_mail(product)
     else:
-        print('  [-] El precio es superior a', MAX_PRICE, '€')
+        print(translations['scraper']['greater'], MAX_PRICE, translations['currency'])
 
 def send_mail(product):
-
+    """ Sends an email to the user using his credentials,
+    from the data/credentials.json file. """
     with open('data/credentials.json', 'rt') as f:
         credentials = json.load(f)
 
@@ -59,14 +65,53 @@ def send_mail(product):
         msg
     )
 
-    print('  [+] El producto está rebajado. Correo enviado.')
+    print(translations['scraper']['less'])
 
     server.quit()
 
+def scraper():
+    """ Starts the scraping of the products """
+    with open('data/products.json', 'rt') as f:
+        products = json.load(f)
 
-with open('data/products.json', 'rt') as f:
-    products = json.load(f)
+    for product in products:
+        check_price(product)
+        print('\n')
 
-for product in products:
-    check_price(product)
-    print('\n')
+def main():
+    global translations
+
+    while(True):
+        language = input('Language/Idioma (en for English / es para Español): ').lower()
+        if(language == 'en' or language == 'es'):
+            break
+
+    with open('translations/{}.json'.format(language), encoding='utf-8') as f:
+        translations = json.load(f)
+
+    while(True):
+        os.system('cls')
+        print_main_menu()
+        option = int(input(translations['choice']))
+        if(option > 0 and option < 5):
+            break
+
+    if(option == 1):
+        scraper()
+
+def print_main_menu():
+    print("{:*^50s}".format('')) 
+    print("*{: ^48s}*".format("Amazon Scraper".upper()))
+    print("{:*^50s}".format('')) 
+    print("*  {: <46s}*".format(translations['menu']['opt1']))
+    # print("*  {: <46s}*".format(translations['menu']['opt2']))
+    # print("*  {: <46s}*".format(translations['menu']['opt3']))
+    # print("*  {: <46s}*".format(translations['menu']['opt4']))
+    print("{:*^50s}".format(''))
+
+
+translations = {}
+
+if(__name__ == '__main__'):
+    main()
+

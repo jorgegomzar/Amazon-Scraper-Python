@@ -1,0 +1,14 @@
+{
+    "menu": {
+        "opt1": "1. Comprobar productos.",
+        "opt2": "2. Añadir producto.",
+        "opt3": "3. Eliminar producto.",
+        "opt4": "4. Establecer credenciales."
+    },
+    "choice": "Tu elección: ",
+    "scraper": {
+        "greater": "  [-] El precio es superior a",
+        "less": "  [+] El producto está rebajado. Correo enviado."
+    },
+    "currency": "€"
+}

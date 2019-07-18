@@ -3,7 +3,8 @@
  - Let the user add new products
  - Let the user remove products
  - Let the user change his credentials
-
+ - Add spanish and english translations
+ 
  ### DONE ###
 
  - Credentials are loaded from JSON file

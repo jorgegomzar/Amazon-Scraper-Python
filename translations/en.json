@@ -1,0 +1,14 @@
+{
+    "menu": {
+        "opt1": "1. Scrape current products.",
+        "opt2": "2. Add product.",
+        "opt3": "3. Remove product.",
+        "opt4": "4. Set credentials."
+    },
+    "choice": "Your choice: ",
+    "scraper": {
+        "greater": "  [-] The price is bigger than ",
+        "less": "  [+] The price is lower. Mail sent."
+    },
+    "currency": "$"
+}
