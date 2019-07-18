@@ -83,6 +83,8 @@ def scraper():
     os.system('pause')
 
 def add_product():
+    """ Adds a new product to the products.json file """
+
     os.system('cls')
     name = input(translations['addition']['name'])
     url = input(translations['addition']['url'])
@@ -104,6 +106,8 @@ def add_product():
         json.dump(products, f)
 
 def set_credentials():
+    """ Sets the credentials for the mail notification """
+
     os.system('cls')
     server = input(translations['credentials']['server'])
     port = int(input(translations['credentials']['port']))
@@ -121,6 +125,9 @@ def set_credentials():
         }, f)
 
 def set_language():
+    """ Checks if the user has already been asked for his language,
+    if not, asks him the language preferred and loads the translations """
+
     global translations
 
     if(not os.path.isfile('data/config.json')):
@@ -140,6 +147,8 @@ def set_language():
         translations = json.load(f)
 
 def print_main_menu():
+    """ Just prints main menu, duh """
+
     print("{:*^50s}".format('')) 
     print("*{: ^48s}*".format("Amazon Scraper".upper()))
     print("{:*^50s}".format('')) 
@@ -151,6 +160,8 @@ def print_main_menu():
     print("{:*^50s}".format(''))
 
 def main():
+    """ Where everything starts.
+    Loads the main menu and calls functions to please the user's choices """
 
     set_language()
 
@@ -169,10 +180,6 @@ def main():
             add_product()
         else:
             set_credentials()
-            
-
-
-
 
 translations = {}
 
