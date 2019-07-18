@@ -1,0 +1,12 @@
+[
+    {
+        "name": "Creality Ender 3 Pro",
+        "url": "https://www.amazon.es/Impresora-3D-Pro-Creality-estandar/dp/B07PF9ZW4N/",
+        "max_price": 200.0
+    },
+    {
+        "name": "The name of the product (so you can identify it easier)",
+        "url": "The amazon link including '/dp/THE_ASIN_CODE' (check the example above)",
+        "max_price": The max price you would pay for it
+    },
+]
