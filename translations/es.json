@@ -1,5 +1,6 @@
 {
     "menu": {
+        "opt0": "0. Cerrar.",
         "opt1": "1. Comprobar productos.",
         "opt2": "2. Añadir producto.",
         "opt3": "3. Eliminar producto.",
@@ -10,5 +11,18 @@
         "greater": "  [-] El precio es superior a",
         "less": "  [+] El producto está rebajado. Correo enviado."
     },
-    "currency": "€"
+    "currency": "€",
+    "addition": {
+        "name": " - Nombre del producto: ",
+        "url": " - Url del producto: ",
+        "price": " - Precio máximo del producto: "
+    },
+    "credentials": {
+        "server": " - Introduce la url del servidor de correo: ",
+        "port": " - Introduce el puerto del servidor de correo: ",
+        "mailFrom": " - Introduce tu dirección de correo: ",
+        "mailTo": " - Introduce la dirección de correo destino: ",
+        "password": " - Introduce la contraseña de tu cuenta de correo: "
+    },
+    "warning": "Por favor, comprueba si hay algún producto o si has añadido las credenciales."
 }

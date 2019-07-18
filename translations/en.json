@@ -1,5 +1,6 @@
 {
     "menu": {
+        "opt0": "0. Close.",
         "opt1": "1. Scrape current products.",
         "opt2": "2. Add product.",
         "opt3": "3. Remove product.",
@@ -10,5 +11,18 @@
         "greater": "  [-] The price is bigger than ",
         "less": "  [+] The price is lower. Mail sent."
     },
-    "currency": "$"
+    "currency": "$",
+    "addition": {
+        "name": " - Name of the product: ",
+        "url": " - Url of the product: ",
+        "price": " - Max price of the product: "
+    },
+    "credentials": {
+        "server": " - Enter the server url: ",
+        "port": " - Enter the server port: ",
+        "mailFrom": " - Enter the sender address: ",
+        "mailTo": " - Enter the receiver address: ",
+        "password": " - Enter the sender password: "
+    },
+    "warning": "Please, check if there are any products or credentials created."
 }

@@ -1,12 +1,13 @@
  ### TO DO ###
 
- - Let the user add new products
  - Let the user remove products
- - Let the user change his credentials
- - Add spanish and english translations
- 
+
  ### DONE ###
 
  - Credentials are loaded from JSON file
  - Product details are loaded from JSON file
  - Check numerous products at once from JSON file
+ - Add a menu
+ - Let the user add new products
+ - Let the user set his credentials
+ - Add spanish and english translations

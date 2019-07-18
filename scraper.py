@@ -4,7 +4,6 @@ import smtplib
 import json
 import os
 
-
 def check_price(product):
     """ Checks the current price of a product.
     If the price is below the MAX_PRICE chose by the user
@@ -40,7 +39,7 @@ def check_price(product):
     if(actual_price < MAX_PRICE):
         send_mail(product)
     else:
-        print(translations['scraper']['greater'], MAX_PRICE, translations['currency'])
+        print(translations['scraper']['greater'], '{:.2f}'.format(MAX_PRICE), translations['currency'])
 
 def send_mail(product):
     """ Sends an email to the user using his credentials,
@@ -71,43 +70,108 @@ def send_mail(product):
 
 def scraper():
     """ Starts the scraping of the products """
-    with open('data/products.json', 'rt') as f:
-        products = json.load(f)
 
-    for product in products:
-        check_price(product)
-        print('\n')
+    if(os.path.isfile('data/products.json') and os.path.isfile('data/credentials.json')):
+        with open('data/products.json', 'rt') as f:
+            products = json.load(f)
+        for product in products:
+            check_price(product)
+            print('\n')
+    else:
+        print(translations['warning'])
+    
+    os.system('pause')
 
-def main():
+def add_product():
+    os.system('cls')
+    name = input(translations['addition']['name'])
+    url = input(translations['addition']['url'])
+    price = float(input(translations['addition']['price']))
+
+    if(os.path.isfile('data/products.json')):
+        with open('data/products.json', 'r') as f:
+            products = json.load(f)
+    else:
+        products = []
+
+    products.append({
+        'name': name,
+        'url': url,
+        'max_price': price
+    })
+
+    with open('data/products.json', 'w') as f:
+        json.dump(products, f)
+
+def set_credentials():
+    os.system('cls')
+    server = input(translations['credentials']['server'])
+    port = int(input(translations['credentials']['port']))
+    mailFrom = input(translations['credentials']['mailFrom'])
+    mailTo = input(translations['credentials']['mailTo'])
+    password = input(translations['credentials']['password'])
+
+    with open('data/credentials.json', 'w') as f:
+        json.dump({
+            "server": server,
+            "port": port,
+            "mailFrom": mailFrom,
+            "mailTo": mailTo,
+            "password": password,
+        }, f)
+
+def set_language():
     global translations
 
-    while(True):
-        language = input('Language/Idioma (en for English / es para Español): ').lower()
-        if(language == 'en' or language == 'es'):
-            break
+    if(not os.path.isfile('data/config.json')):
+        while(True):
+            language = input('Language/Idioma (en for English / es para Español): ').lower()
+            if(language == 'en' or language == 'es'):
+                with open('data/config.json', 'w') as f:
+                    json.dump({ "language": language },f)
+                break
+    else:
+        with open('data/config.json', 'r') as f:
+            config = json.load(f)
+            language = config['language']
+    
 
     with open('translations/{}.json'.format(language), encoding='utf-8') as f:
         translations = json.load(f)
-
-    while(True):
-        os.system('cls')
-        print_main_menu()
-        option = int(input(translations['choice']))
-        if(option > 0 and option < 5):
-            break
-
-    if(option == 1):
-        scraper()
 
 def print_main_menu():
     print("{:*^50s}".format('')) 
     print("*{: ^48s}*".format("Amazon Scraper".upper()))
     print("{:*^50s}".format('')) 
+    print("*  {: <46s}*".format(translations['menu']['opt0']))
     print("*  {: <46s}*".format(translations['menu']['opt1']))
-    # print("*  {: <46s}*".format(translations['menu']['opt2']))
+    print("*  {: <46s}*".format(translations['menu']['opt2']))
     # print("*  {: <46s}*".format(translations['menu']['opt3']))
-    # print("*  {: <46s}*".format(translations['menu']['opt4']))
+    print("*  {: <46s}*".format(translations['menu']['opt4']))
     print("{:*^50s}".format(''))
+
+def main():
+
+    set_language()
+
+    while(True):
+        while(True):
+            os.system('cls')
+            print_main_menu()
+            option = int(input(translations['choice']))
+            if(option >= 0 and option < 5):
+                break
+        if(option == 0):
+            break
+        elif(option == 1):
+            scraper()
+        elif(option == 2):
+            add_product()
+        else:
+            set_credentials()
+            
+
+
 
 
 translations = {}
