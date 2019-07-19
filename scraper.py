@@ -56,7 +56,10 @@ def send_mail(product):
 
     subject = 'REBAJA - ' + product['name']
     body = 'Haz click en el siguiente enlace: ' + product['url']
+
     msg = f'Subject: {subject}\n\n{body}'
+
+    msg = fix_characters(msg)
     
     server.sendmail(
         credentials['mailFrom'],
@@ -67,6 +70,23 @@ def send_mail(product):
     print(translations['scraper']['less'])
 
     server.quit()
+
+def fix_characters(cadena):
+    """ Replaces unicode characters and encodes the string in utf-8 """
+    d = {
+        '\xc1':'A', '\xc9':'E', '\xcd':'I', '\xda':'U', '\xdc':'U', '\xd1':'N', '\xc7':'C',
+        '\xed':'i', '\xf3':'o', '\xf1':'n', '\xe7':'c', '\xba':'',  '\xb0':'',  '\x3a':'',
+        '\xe1':'a', '\xe2':'a', '\xe3':'a', '\xe4':'a', '\xe5':'a', '\xe8':'e', '\xe9':'e',
+        '\xea':'e', '\xeb':'e', '\xec':'i', '\xed':'i', '\xee':'i', '\xef':'i', '\xf2':'o',
+        '\xf3':'o', '\xf4':'o', '\xf5':'o', '\xf0':'o', '\xf9':'u', '\xfa':'u', '\xfb':'u',
+        '\xfc':'u', '\xe5':'a' }
+
+    nueva_cadena = cadena
+    for c in d.keys():
+        nueva_cadena = nueva_cadena.replace(c,d[c])
+
+    auxiliar = nueva_cadena.encode('utf-8')
+    return nueva_cadena
 
 def scraper():
     """ Starts the scraping of the products """
